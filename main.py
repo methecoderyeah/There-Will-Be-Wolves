@@ -22,5 +22,9 @@ def was_medieval_justice_fair():
 def punishments():
     return render_template("punishments.html")
 
+@app.route("/credits")
+def credits():
+    return render_template("credits.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
