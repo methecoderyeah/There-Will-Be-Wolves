@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block head %}
+<title>Welcome</title>
+
+<style>
+    .center-grid {
+    display: grid;
+    place-items: center;
+    }
+    .content-area {
+    height: calc(100vh - 200px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row flex-lg-row-reverse align-items-center g-5 py-5 background-image center-grid content-area">
+    <div class="col-10 col-sm-8 col-lg-6">
+        <img src="/static/medieval_justice.png" class="d-block mx-lg-auto img-fluid" alt="Is This Really Just?" width="700" height="500" loading="lazy" style="border-radius: 10px;"> 
+        <h3 style="color: #660000;">This Does Not. Look. Just.</h3>
+    </div>
+    <div class="col-lg-6">
+        <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Define Justice:</h1>
+        <ol>
+            <li>
+                <p class="lead">Just behaviour or treatment:<ul><li>"a concern for justice, peace, and genuine respect for people"</p></li></ul>
+            </li>
+        </ol>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start"> 
+            <a type="button" class="btn btn-primary btn-lg px-4 me-md-2">Credits</a> 
+            <a type="button" class="btn btn-outline-secondary btn-lg px-4">GitHub Repository</a> 
+        </div>
+   </div>
+</div>
+{% endblock %}
