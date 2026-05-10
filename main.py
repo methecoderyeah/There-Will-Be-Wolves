@@ -18,7 +18,7 @@ def how_medieval_courts_worked():
 def was_medieval_justice_fair():
     return render_template("was_medieval_justice_fair.html")
 
-@app.route("/punishments")
+@app.route("/punishments-&-crimes")
 def punishments():
     return render_template("punishments.html")
 
