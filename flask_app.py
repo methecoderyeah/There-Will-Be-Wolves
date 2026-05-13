@@ -26,5 +26,9 @@ def punishments():
 def credits():
     return render_template("credits.html")
 
+@app.route("/cat")
+def cat():
+    return render_template("cat.html")
+
 if __name__ == "__main__":
     app.run(debug=True)

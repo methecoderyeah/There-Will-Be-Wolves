@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head %}
+<title>cat</title>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-auto d-flex justify-content-center">
+        <img src="/static/cat.jpg" style="height: 75vh; max-width: 100%;">
+    </div>
+    <div class="col-auto">
+        <video width="300px" controls>
+            <source src="{{ url_for('static', filename='Cat Video.mov') }}" type="video/mp4">
+        </video>
+        <h3>Play The Video!</h3>
+    </div>
+</div>
+<h2>(Why did I think adding this page was a good idea?)</h2>
+{% endblock %}
