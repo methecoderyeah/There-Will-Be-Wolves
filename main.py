@@ -32,3 +32,5 @@ def cat():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+#for future, add button redirects
