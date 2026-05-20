@@ -23,7 +23,7 @@ def punishments():
     return render_template("punishments.html")
 
 @app.route("/credits")
-def credits():
+def credits_():
     return render_template("credits.html")
 
 @app.route("/cat")
