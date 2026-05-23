@@ -1,110 +1,208 @@
 <!DOCTYPE html>
 <html data-bs-theme="dark" lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-      <link href="/static/icon.png" rel="icon" type="image/png">
-      <style>
-         html {
-            scroll-behavior: smooth;
-         }
-         p {
-         font-size: 1.1rem;
-         margin-bottom: 0.5em;
-         }
-         body {
-            line-height: 1.6
-         }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/icon.png" rel="icon" type="image/png">
 
-         @keyframes fadeIn {
-         from { opacity: 0; transform: translateY(-30px); }
-         to   { opacity: 1; transform: translateY(0); }
-         }
-         .center-grid {
-         display: grid;
-         place-items: center;
-         }
-         .content-area {
-         height: calc(100vh - 25vh);
-         }
-         .define-title {
-         font-size: 2.2rem;
-         font-weight: 300;
-         letter-spacing: 10px;
-         color: #990000;
-         margin-top: 1rem;
-         }
-         .highlight {
-         color: #660000;
-         }
-         .highlight_box {
-         background: rgb(255, 255, 255);
-         padding: 1.8rem 2rem;
-         border-radius: 12px;
-         backdrop-filter: blur(4px);
-         box-shadow: 0 0 20px rgba(0,0,0,0.25);
-         margin-top: 1rem;
-         }
-         .page-body {
-         animation: fadeIn 1s ease-out;
-         }
-         .essay-text {
-            max-width: 45vw;
-         }
-         .indent {
-            text-indent: 2vw;
-         }
-         .essay-text p {
+    <style>
+        html { scroll-behavior: smooth; }
+        p { font-size: 1.1rem; margin-bottom: 0.5em; }
+        body { line-height: 1.6; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .center-grid { display: grid; place-items: center; }
+        .content-area { height: calc(100vh - 25vh); }
+
+        .define-title {
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 10px;
+            color: #990000;
+            margin-top: 1rem;
+        }
+
+        .highlight { color: #660000; }
+
+        .highlight_box {
+            background: rgb(255, 255, 255);
+            padding: 1.8rem 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.25);
+            margin-top: 1rem;
+        }
+
+        .page-body { animation: fadeIn 1s ease-out; }
+
+        .essay-text { max-width: 45vw; }
+        .indent { text-indent: 2vw; }
+
+        .essay-text p {
             text-align: justify;
             text-align-last: left;
+        }
+
+        #robber {
+            position: fixed;
+            bottom: 20px;
+            left: -150px;
+            width: 100px;
+            height: 100px;
+            background: url('/static/robber.png') center/contain no-repeat;
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+
+        #fake-cursor {
+            position: fixed;
+            width: 32px;
+            height: 32px;
+            background: url('/static/cursor.png') center/contain no-repeat;
+            display: none;
+            pointer-events: none;
+        }
+
+         body.stolen {
+            cursor: none !important;
          }
-      </style>
-      {% block head %}
-      {% endblock %}
-   </head>
-   <body>
-      <script>
-         window.addEventListener('wheel', e => {
-         e.preventDefault();
 
-         const amount = e.deltaY * 1; // speed
-         const frames = 12;             // more frames = smoother
-         let currentFrame = 0;
+         body.stolen * {
+            cursor: none !important;
+            pointer-events: none !important;
+         }
 
-         function animate() {
-            const step = amount / frames;
-            window.scrollBy(0, step);
-            currentFrame++;
+         /* EXCEPTION: fake cursor stays alive */
+         body.stolen #fake-cursor {
+            pointer-events: auto !important;
+            cursor: none !important;
+         }
 
-            if (currentFrame < frames) {
-               requestAnimationFrame(animate);
+    </style>
+
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+    <div id="robber"></div>
+    <div id="fake-cursor"></div>
+
+    <script>
+        window.addEventListener('wheel', e => {
+            e.preventDefault();
+
+            const amount = e.deltaY * 1;
+            const frames = 12;
+            let currentFrame = 0;
+
+            function animate() {
+                const step = amount / frames;
+                window.scrollBy(0, step);
+                currentFrame++;
+
+                if (currentFrame < frames) {
+                    requestAnimationFrame(animate);
+                }
             }
-         }
 
-         requestAnimationFrame(animate);
-         }, { passive: false });
-      </script>
+            requestAnimationFrame(animate);
+        }, { passive: false });
+    </script>
 
-      <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" style="padding-left: 1cm;">
-         <span class="fs-4">Okay. So What is Justice?</span> 
-         </a>
-         <ul class="nav nav-pills" style="padding-right: 3cm;">
-            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let mouseX = 0, mouseY = 0;
+            let stolen = false;
+
+            const robber = document.getElementById("robber");
+            const fakeCursor = document.getElementById("fake-cursor");
+
+            window.addEventListener("mousemove", e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+
+                if (stolen) {
+                    fakeCursor.style.left = (robber.offsetLeft + 60) + "px";
+                    fakeCursor.style.top = (robber.offsetTop + 20) + "px";
+                }
+            });
+
+            function summonRobber() {
+                robber.style.left = "-150px";
+
+                setTimeout(() => {
+                    robber.style.left = "100px";
+                    chaseMouse();
+                }, 200);
+            }
+
+            function chaseMouse() {
+                const interval = setInterval(() => {
+                    if (stolen) return clearInterval(interval);
+
+                    const dx = mouseX - robber.offsetLeft;
+                    const dy = mouseY - robber.offsetTop;
+                    const dist = Math.hypot(dx, dy);
+
+                    robber.style.left = robber.offsetLeft + dx * 0.12 + "px";
+                    robber.style.top = robber.offsetTop + dy * 0.04 + "px";
+
+                    if (dist < 80 && !stolen) {
+                        stealCursor();
+                        clearInterval(interval);
+                    }
+                }, 20);
+            }
+
+            function stealCursor() {
+                stolen = true;
+                document.body.classList.add("stolen");
+                fakeCursor.style.display = "block";
+
+                setTimeout(() => {
+                    robber.style.left = "-300px";
+
+                    const follow = setInterval(() => {
+                        fakeCursor.style.left = (robber.offsetLeft + 60) + "px";
+                        fakeCursor.style.top = (robber.offsetTop + 20) + "px";
+                    }, 20);
+
+                    setTimeout(() => clearInterval(follow), 1500);
+                }, 500);
+            }
+
+            setInterval(() => {
+                if (!stolen) summonRobber();
+            }, Math.random() * 15000 + 10000);
+        });
+    </script>
+
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" style="padding-left: 1cm;">
+            <span class="fs-4">Okay. So What is Justice?</span>
+        </a>
+
+        <ul class="nav nav-pills" style="padding-right: 3cm;">
+            <li class="nav-item"><a href="/" class="nav-link active">Home</a></li>
             <li class="nav-item"><a href="/what-is-justice" class="nav-link">What is Justice?</a></li>
             <li class="nav-item"><a href="/how-medieval-courts-worked" class="nav-link">How Did Medieval Courts Work?</a></li>
             <li class="nav-item"><a href="/was-medieval-justice-fair" class="nav-link">Was Medieval Justice Really Fair?</a></li>
             <li class="nav-item"><a href="/punishments-&-crimes" class="nav-link">How Where People Punished, and Why?</a></li>
-         </ul>
-      </header>
+        </ul>
+    </header>
 
-      <div class="container py-4">
-         <div class="page-body">
-         {% block content %}
-         {% endblock %}
-         </div>
-      </div>
-   </body>
+    <div class="container py-4">
+        <div class="page-body">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+</body>
 </html>
