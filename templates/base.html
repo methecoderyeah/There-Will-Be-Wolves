@@ -66,24 +66,28 @@
             height: 32px;
             background: url('/static/cursor.png') center/contain no-repeat;
             display: none;
-            pointer-events: none;
+            pointer-events: auto;
         }
 
-         body.stolen {
+        /* Cursor hidden + ALL interactions disabled */
+        body.stolen {
             cursor: none !important;
-         }
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
 
-         body.stolen * {
+        body.stolen * {
             cursor: none !important;
             pointer-events: none !important;
-         }
+            user-select: none !important;
+            -webkit-user-select: none !important;
+        }
 
-         /* EXCEPTION: fake cursor stays alive */
-         body.stolen #fake-cursor {
+        /* Fake cursor stays alive */
+        body.stolen #fake-cursor {
             pointer-events: auto !important;
             cursor: none !important;
-         }
-
+        }
     </style>
 
     {% block head %}{% endblock %}
