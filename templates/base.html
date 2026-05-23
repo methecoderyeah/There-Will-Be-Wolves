@@ -170,6 +170,22 @@
                 document.body.classList.add("stolen");
                 fakeCursor.style.display = "block";
 
+                // Show refresh message
+                const msg = document.createElement("div");
+                msg.innerText = "Your cursor has been stolen by the robber. Refresh the page (Control+R) to get it back. (Why did I think that a robber was a good idea?)";
+                msg.style.position = "fixed";
+                msg.style.bottom = "20px";
+                msg.style.left = "50%";
+                msg.style.transform = "translateX(-50%)";
+                msg.style.background = "rgba(0,0,0,0.8)";
+                msg.style.color = "white";
+                msg.style.padding = "12px 20px";
+                msg.style.borderRadius = "8px";
+                msg.style.fontSize = "1.1rem";
+                msg.style.zIndex = "9999";
+                msg.style.pointerEvents = "none";
+                document.body.appendChild(msg);
+
                 setTimeout(() => {
                     robber.style.left = "-300px";
 
@@ -181,6 +197,7 @@
                     setTimeout(() => clearInterval(follow), 1500);
                 }, 500);
             }
+
 
             setInterval(() => {
                 if (!stolen) summonRobber();
