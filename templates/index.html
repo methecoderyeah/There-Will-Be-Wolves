@@ -1,28 +1,48 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block head %}
 <title>Welcome</title>
 {% endblock %}
 {% block content %}
-<div class="row flex-lg-row-reverse align-items-center g-5 py-5 center-grid content-area">
-   <div class="col-10 col-sm-8 col-lg-6">
-      <img src="/static/medieval_justice.png" class="d-block mx-lg-auto img-fluid" alt="Is This Really Just?" width="700" height="500" loading="lazy" style="border-radius: 10px;"> 
-      <h3 class="define-title highlight_box" style="color: #660000;">This Does Not. Look. Just.</h3>
-   </div>
-   <div class="col-lg-6">
-      <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Define <span class="highlight">Justice:</span></h1>
-      <ol>
-         <li>
-            <p class="lead">Just behaviour or treatment:</p>
-            <ul>
-               <li>"a concern for justice, peace, and genuine respect for people"</li>
-            </ul>
-         </li>
-      </ol>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-start"> 
-         <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" href="/credits">Credits</a> 
-         <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="https://github.com/methecoderyeah/There-Will-Be-Wolves">GitHub Repository</a> 
+<div style="overflow-y: hidden">
+   <div class="d-flex align-items-center g-5 py-5 content-area">
+      <div class="col-lg-6 container">
+         <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">
+               Define <span class="highlight">Justice:</span>
+         </h1>
+         <ol>
+               <li>
+                  <p class="lead">Just behaviour or treatment:</p>
+                  <ul>
+                     <li>a concern for justice, peace, and genuine respect for people</li>
+                  </ul>
+               </li>
+         </ol>
+
+         <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
+               <a type="button" class="btn btn-primary btn-lg px-4 me-md-2" href="/credits">credits</a>
+               <a type="button" class="btn btn-outline-secondary btn-lg px-4" href="https://github.com/methecoderyeah/There-Will-Be-Wolves">GitHub Repository</a>
+         </div>
+      </div>
+      <div class="col-10 col-sm-8 col-lg-6 container text-center">
+         <img src="/static/medieval_justice.png"
+               class="d-block mx-auto img-fluid"
+               alt="Is This Really Just?"
+               width="700" height="500"
+               loading="lazy"
+               style="border-radius: 10px;">
+
+         <h3 class="define-title highlight_box mt-3" style="color: #660000;">
+               This Does Not. Look. Just.
+         </h3>
       </div>
    </div>
 </div>
-<div><a href="/cat" class="btn btn-outline-light mt-3">Random Cat Picture</a></div>
+<div class="row">
+   <div class="col-auto" style="padding-right: 5vw;">
+      <a href="/cat" class="btn btn-outline-light ">Random Cat Picture</a>
+   </div>
+   <div class="col-auto">
+      <h6">*Totally did not make scrolling speed slower to make it seem like the essays are longer than they are. Also, look for an easter egg on the page.</h6>
+   </div>
+</div>
 {% endblock %}
