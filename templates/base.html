@@ -110,6 +110,18 @@
             const robber = document.getElementById("robber");
             const fakeCursor = document.getElementById("fake-cursor");
 
+            document.addEventListener("click", () => {
+                if (stolen) {
+                    document.body.requestPointerLock();
+                }
+            });
+
+            document.addEventListener("pointerlockchange", () => {
+                if (stolen && document.pointerLockElement !== document.body) {
+                    console.log("Pointer lock escaped — robber still has your cursor.");
+                }
+            });
+
             window.addEventListener("mousemove", e => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -117,6 +129,12 @@
                 if (stolen) {
                     fakeCursor.style.left = (robber.offsetLeft + 60) + "px";
                     fakeCursor.style.top = (robber.offsetTop + 20) + "px";
+                }
+            });
+
+            document.addEventListener("contextmenu", e => {
+                if (stolen) {
+                    e.preventDefault();
                 }
             });
 
