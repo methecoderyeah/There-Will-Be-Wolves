@@ -61,7 +61,9 @@
             display: none;
             pointer-events: auto;
         }
-        body.stolen {
+        html.stolen,
+        html.stolen body,
+        html.stolen * {
             cursor: none !important;
             user-select: none !important;
         }
@@ -83,8 +85,6 @@
 
     <div id="robber"></div>
     <div id="fake-cursor"></div>
-
-    <!-- Smooth scroll override -->
     <script>
         window.addEventListener('wheel', e => {
             e.preventDefault();
@@ -102,8 +102,6 @@
             requestAnimationFrame(animate);
         }, { passive: false });
     </script>
-
-    <!-- Robber + Fake Cursor + Pointer Lock -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let mouseX = 0, mouseY = 0;
@@ -112,37 +110,34 @@
             const robber = document.getElementById("robber");
             const fakeCursor = document.getElementById("fake-cursor");
 
-            /* ⭐ Click locks cursor when stolen ⭐ */
             document.addEventListener("click", () => {
                 if (stolen) {
                     document.body.requestPointerLock();
                 }
             });
 
-            /* ⭐ Detect pointer lock loss ⭐ */
             document.addEventListener("pointerlockchange", () => {
-                if (stolen && document.pointerLockElement !== document.body) {
-                    console.log("Pointer lock escaped — robber still has your cursor.");
-                    // Re-lock immediately when escaped
-                    document.body.requestPointerLock();
+                if (stolen) {
+                    if (document.pointerLockElement !== document.body) {
+                        setTimeout(() => document.body.requestPointerLock(), 10);
+                        console.log("Pointer lock escaped — robber still has your cursor.");
+                        document.body.requestPointerLock();
+                    }
+                    document.body.style.cursor = "none";
                 }
             });
 
-            /* ⭐ Disable right-click when stolen ⭐ */
             document.addEventListener("contextmenu", e => {
                 if (stolen) e.preventDefault();
             });
 
-            /* ⭐ Fast movement pointer lock (Option A) ⭐ */
             let lastX = 0, lastY = 0;
             let lastTime = performance.now();
 
             window.addEventListener("mousemove", e => {
-                // Always update mouse position for robber AI
                 mouseX = e.clientX;
                 mouseY = e.clientY;
 
-                // Always compute speed
                 const now = performance.now();
                 const dt = now - lastTime;
 
@@ -155,11 +150,9 @@
                 lastTime = now;
 
                 if (stolen) {
-                    // Move fake cursor
                     fakeCursor.style.left = (robber.offsetLeft + 60) + "px";
                     fakeCursor.style.top = (robber.offsetTop + 20) + "px";
 
-                    // Fast movement triggers pointer lock
                     if (speed > 0.1) {
                         document.body.requestPointerLock();
                     }
@@ -195,10 +188,9 @@
 
             function stealCursor() {
                 stolen = true;
-                document.body.classList.add("stolen");
+                document.documentElement.classList.add("stolen");
                 fakeCursor.style.display = "block";
 
-                // Lock cursor immediately when stolen
                 document.body.requestPointerLock();
 
                 const msg = document.createElement("div");
@@ -232,15 +224,44 @@
                 if (!stolen) summonRobber();
             }, Math.random() * 4000 + 3000);
         });
-        /* ⭐ Re-lock on Escape key ⭐ */
         document.addEventListener("keydown", (e) => {
             if (stolen && e.key === "Escape") {
-                // Small delay to let the lock release, then immediately re-lock
                 setTimeout(() => {
                     document.body.requestPointerLock();
                 }, 1);
             }
         });
+        
+        window.addEventListener("mousemove", e => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        const now = performance.now();
+        const dt = now - lastTime;
+
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        const speed = Math.hypot(dx, dy) / dt;
+
+        lastX = e.clientX;
+        lastY = e.clientY;
+        lastTime = now;
+
+        if (stolen) {
+
+            if (document.pointerLockElement !== document.body) {
+                document.body.requestPointerLock();
+            }
+
+            fakeCursor.style.left = (robber.offsetLeft + 60) + "px";
+            fakeCursor.style.top = (robber.offsetTop + 20) + "px";
+
+            if (speed > 0.1) {
+                document.body.requestPointerLock();
+            }
+        }
+    });
+
     </script>
 
     <header class="d-flex justify-content-between py-3 mb-4 border-bottom">

@@ -28,7 +28,7 @@ def cat():
 
 @app.route("/sources")
 def sources():
-    return render_template
+    return render_template("sources.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
