@@ -26,5 +26,9 @@ def credits_():
 def cat():
     return render_template("cat.html")
 
+@app.route("/sources")
+def sources():
+    return render_template
+
 if __name__ == "__main__":
     app.run(debug=True)
