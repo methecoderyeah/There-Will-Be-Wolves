@@ -87,23 +87,6 @@
     <div id="robber"></div>
     <div id="fake-cursor"></div>
     <script>
-        window.addEventListener('wheel', e => {
-            e.preventDefault();
-            const amount = e.deltaY * 1;
-            const frames = 12;
-            let currentFrame = 0;
-
-            function animate() {
-                const step = amount / frames;
-                window.scrollBy(0, step);
-                currentFrame++;
-                if (currentFrame < frames) requestAnimationFrame(animate);
-            }
-
-            requestAnimationFrame(animate);
-        }, { passive: false });
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", () => {
             let mouseX = 0, mouseY = 0;
             let stolen = false;
@@ -266,7 +249,7 @@
     </script>
 
     <header class="d-flex justify-content-between py-3 mb-4 border-bottom">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" style="padding-left: 1cm;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none" style="padding-left: 5vw;">
             <span class="fs-4">What is Justice?</span>
         </a>
 
